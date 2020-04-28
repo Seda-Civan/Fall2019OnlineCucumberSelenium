@@ -13,7 +13,7 @@
         <maven.compiler.target>12</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-<!--    -->
+
     <profiles>
         <profile>
             <id>Smoke</id>
@@ -64,16 +64,17 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M4</version>
                 <configuration>
-                    <!-- for parallel running Cucumber-->
+                    <!--                    <parallel>classes</parallel>-->
+                    <!--                    <threadCount>2</threadCount>-->
+                    <!--                    <perCoreThreadCount>false</perCoreThreadCount>-->
+                    <!--                    <forkCount>2C</forkCount>-->
+                    <!--                    <includes>-->
+                    <!--                        <include>**/*Runner.java</include>-->
+                    <!--                </includes>               -->
                     <parallel>methods</parallel>
                     <useUnlimitedThreads>true</useUnlimitedThreads>
-                    <includes>
-<!--                        list all runner classes here-->
-                        <include>**/CucumberRunner*.java</include>
-                    </includes>
+                    <includes>*CucumberRunner.java </includes>
                     <testFailureIgnore>true</testFailureIgnore>
-<!--                    to rerun failed tests automatically -->
-<!--                    <rerunFailingTestsCount>1</rerunFailingTestsCount>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -102,16 +103,31 @@
     </build>
 
     <dependencies>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.30</version>
         </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.30</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>3.8.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.141.59</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -121,22 +137,10 @@
         <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
         <dependency>
             <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit</artifactId>
+            <artifactId>cucumber-testng</artifactId>
             <version>5.6.0</version>
-            <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>3.141.59</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>3.8.1</version>
-        </dependency>
+
     </dependencies>
 
 </project>

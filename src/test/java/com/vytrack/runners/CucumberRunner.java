@@ -1,8 +1,5 @@
 package com.vytrack.runners;
 
-import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
-import org.junit.runner.RunWith;
 
 //@RunWith => comes from Junit. It allows to have custom test configuration
 //cucumber has it's own flow to run test - during runtime turns into executable test
@@ -21,7 +18,10 @@ import org.junit.runner.RunWith;
 //json object has only properties no method; java object has both properties and methods
 //We add json plugin => "json:target/cucumber.json" => to let it generate by our framework
 //and we added plugin to pom xml => maven-surefire-plugin
-@RunWith(Cucumber.class)
+
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
+
 @CucumberOptions(
         glue = "com/vytrack/step_definitions",
         features = "src/test/resources/features",
@@ -36,7 +36,7 @@ import org.junit.runner.RunWith;
                  "rerun:target/rerun.txt"
                 }
 )
-public class CucumberRunner{
+public class CucumberRunner extends AbstractTestNGCucumberTests {
 
 }
 

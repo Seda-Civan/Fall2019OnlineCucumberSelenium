@@ -3,7 +3,7 @@ Feature: Login tests with Scenario Outline
 
   Scenario Outline: Go to <module> and verify title: <title>
     Given user is on the login page
-    When user logs is as "<user_type>"
+    When user logs in as "<user_type>"
     And user navigates to "<tab>" and "<module>"
     Then user verifies that page title is "<title>"
 #<> gets the data from the table, “<>” makes it a parameter to be used in the step definition
