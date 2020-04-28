@@ -1,0 +1,22 @@
+package com.vytrack.step_definitions;
+
+import com.vytrack.pages.activities.CalendarEventsPage;
+import io.cucumber.java.en.Then;
+import org.junit.Assert;
+
+import java.util.List;
+
+public class ViewCalendarEventsStepDefinitions {
+
+    CalendarEventsPage calendarEventsPage = new CalendarEventsPage();
+
+    @Then("View Per Page menu should have following options")
+    public void view_Per_Page_menu_should_have_following_options(List<String> dataTable) {
+        System.out.println("Expected values = " + dataTable);
+        //equals method used to compare 2 object,
+        // and arraylist has overridden equals method, when we have 2 list, we can compare
+        Assert.assertEquals(dataTable, calendarEventsPage.getViewPerPageOptions());
+    }
+
+
+}

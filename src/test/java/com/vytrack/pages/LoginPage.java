@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 //POM
-public class LoginPage {
+public class LoginPage  extends AbstractPageBase{
 
     //use these on top of instance variables
     @FindBy(id = "prependedInput")
@@ -31,20 +31,20 @@ public class LoginPage {
     private WebElement warningMessage;
 
 
-
+    //WE REMOVED CONSTRUCTOR BECAUSE WE EXTENDED PAGEBASE CLASS, BECAUSE WE NEED NAVIGATEto() METHOD IN STEP DEFINITIOS CLASS
     //PageFactory basically initializes the elements if we don't use it,
     //it means we can not access the elements which is stored in class
     //When you create LoginPage Object it call PageFactory.initElements method and you initialize
     // all the elements defined by FindBy elements
     //and then you are able to move on for the next steps
-    public LoginPage(){
+    //public LoginPage(){
         //to connect our webDriver, page class and page factory
         //pageFactory - used to use @FindBy annotations
         //PageFactory - helps to find elements easier
-        PageFactory.initElements(Driver.getDriver(),this);
+     //   PageFactory.initElements(Driver.getDriver(),this);
         //this => refers to the this page object
         //or =>   PageFactory.initElements(Driver.getDriver(), LoginPage.class);
-    }
+   // }
 
     //method that returns a text of warning message web element. Call it in the test class
     public String getWarningMessageText(){
@@ -77,6 +77,27 @@ public class LoginPage {
 
        password.sendKeys(ConfigurationReader.getProperty("password"), Keys.ENTER);
         BrowserUtilities.wait(5);
+    }
+
+    /**
+     * this method stands for login based on user type
+     * For example: if parameter is equals to driver, user will login as a driver
+     * if parameter is not correct method will throw exception
+     * @param role driver , sales manager or store manager
+     */
+    public void login(String role){
+        String userName = "";
+        if(role.equalsIgnoreCase("driver")){
+            userName = "user15";
+        }else if(role.equalsIgnoreCase("sales manager")){
+            userName = "salesmanager118";
+        }else if(role.equalsIgnoreCase("store manager")){
+            userName = "storemanager85";
+        }else{
+            throw new RuntimeException("Invalid role!");
+        }
+        System.out.println("Login as " + role);
+        login(userName, "UserUser123");
     }
 
 }

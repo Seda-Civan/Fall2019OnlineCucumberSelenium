@@ -48,6 +48,9 @@ public abstract class AbstractPageBase {
     ///a[@class="dropdown-toggle" and contains(text(),'Pearl Wuckert')]
     //we can not use usernames name as locator not reliable!
 
+    @FindBy(css = "[class='btn-group pull-right'] > button")
+    protected WebElement saveAndClose;
+
 
     //done once in the parent class
     public AbstractPageBase() {
@@ -59,6 +62,16 @@ public abstract class AbstractPageBase {
 
     }
 
+    //same button for all pages
+    public void clickOnSaveAndClose(){
+        BrowserUtilities.wait(3);
+        //all 3 method are doing the job
+        //wait until clickable and then click
+        wait.until(ExpectedConditions.elementToBeClickable(saveAndClose)).click();
+        //BrowserUtilities.clickWithJS(saveAndClose);
+        //saveAndClose.click();
+        waitForLoaderMask();
+    }
 
     //We come up with method that will wrap up locator not to have duplication
     // by using webElements directly in test class
@@ -95,6 +108,15 @@ public abstract class AbstractPageBase {
 
         //increase this wait rime if still failing
         BrowserUtilities.wait(4);
+        //wait until page loading icon is invisible
+        waitForLoaderMask();
     }
 
+    /**
+     * this method can be used to wait until that terrible loader mask (spinning wheel) will be gone
+     * if loader mask is present, website is loading some data and you can not perform any operations
+     */
+    public void waitForLoaderMask(){
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[class*='loader-mask']")));
+    }
 }

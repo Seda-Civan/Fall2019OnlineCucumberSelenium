@@ -48,8 +48,6 @@ public class CalendarEventsPage extends AbstractPageBase {
     @FindBy(id = "tinymce")
     private WebElement descriptionTextArea;
 
-    @FindBy(css = "[class='btn-group pull-right'] > button")
-    private WebElement saveAndClose;
 
     //(xpath)[2] means find all xpaths that I typed and find 2nd one
     //xpath[2] means find xpath that I typed as a 2nd child
@@ -61,14 +59,31 @@ public class CalendarEventsPage extends AbstractPageBase {
     //@FindBy(xpath = "//label[text()='Description']/following-sibling::div//p[1]")
     private WebElement generalInfoDescription;
 
+    @FindBy(xpath = "//*[contains(text(),'View per page:')]/following-sibling::*//a")
+    private List<WebElement> viewPerPageElements;
+
+    @FindBy(xpath = "//*[starts-with(text(),\"View per page\")]/..//button")
+    private WebElement viewPerPageToggle;
+
+    public List<String> getViewPerPageOptions() {
+        BrowserUtilities.waitForPageToLoad(20);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[title='Create Calendar event']")));
+        viewPerPageToggle.click();
+        BrowserUtilities.wait(2);
+        return BrowserUtilities.getTextFromWebElements(viewPerPageElements);
+    }
+
     public List<String> getColumnNames(){
         BrowserUtilities.waitForPageToLoad(20);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[title='Create Calendar event']")));
         return BrowserUtilities.getTextFromWebElements(columnNames);
     }
 
     public void enterCalendarEventTitle(String titleValue){
         BrowserUtilities.waitForPageToLoad(20);
         wait.until(ExpectedConditions.visibilityOf(title)).sendKeys(titleValue);
+        wait.until(ExpectedConditions.attributeToBe(title, "value", titleValue));
+
     }
 
     //With enterCalendarEventDescription method in page class;
@@ -79,20 +94,13 @@ public class CalendarEventsPage extends AbstractPageBase {
         //wait for frame element to be available for driver and switched to it(wait + switch => frameToBeAvailableAndSwitchToIt)
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(descriptionFrame));
         descriptionTextArea.sendKeys(description);
+        wait.until(ExpectedConditions.textToBePresentInElement(descriptionTextArea, description));
         driver.switchTo().defaultContent();
         //exit from the frame
         //so you will be able to see other elements,
         //you can not see anything else outside; when you are inside frame
     }
 
-    public void clickOnSaveAndClose(){
-        BrowserUtilities.waitForPageToLoad(20);
-        //all 3 method are doing the job
-        //wait until clickable and then click
-        wait.until(ExpectedConditions.elementToBeClickable(saveAndClose)).click();
-        //BrowserUtilities.clickWithJS(saveAndClose);
-        //saveAndClose.click();
-    }
 
     public String getGeneralInfoTitleText(){
         BrowserUtilities.waitForPageToLoad(20);
@@ -121,7 +129,7 @@ public class CalendarEventsPage extends AbstractPageBase {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[title='Create Calendar event']")));
         wait.until(ExpectedConditions.elementToBeClickable(createCalendarEvent)).click();
         //until method can return web element, this wait is => inherited from abstractBasePAge class
-        BrowserUtilities.waitForPageToLoad(20);
+        BrowserUtilities.wait(2);
     }
 
 
