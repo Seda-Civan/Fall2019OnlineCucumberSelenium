@@ -3,8 +3,6 @@ package com.vytrack.runners;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 //@RunWith => comes from Junit. It allows to have custom test configuration
 //cucumber has it's own flow to run test - during runtime turns into executable test
